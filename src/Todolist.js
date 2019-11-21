@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import "./Todolist.css"
 import Todo from "./Todo"
 import NewTodoForm from "./NewTodoForm"
 import uuid from "uuid/v4";
@@ -9,6 +10,7 @@ class TodoList extends Component {
         this.state = { todos: [] };
         this.handleForm = this.handleForm.bind(this)
         this.handleRemove = this.handleRemove.bind(this)
+        this.handleEdit = this.handleEdit.bind(this)
     }
     handleForm(todo) {
         this.setState((st) => {
@@ -20,13 +22,26 @@ class TodoList extends Component {
         let arr = this.state.todos.filter((el) => el.id !== Id)
         this.setState({ todos: arr })
     }
+    handleEdit(val, id) {
+        let updatedTodos = this.state.todos.map((el) => {
+            if (el.id === id) {
+                return { ...el, todo: val }
+            }
+            else {
+                return el;
+            }
+        })
+        this.setState({ todos: [...updatedTodos] })
+    }
     render() {
         return (
             <div>
-                <NewTodoForm handleForm={this.handleForm} />
-                <ul>
-                    {this.state.todos.map((el) => <Todo text={el.todo} key={el.id} id={el.id} remove={this.handleRemove} />)}
+                <h1>Todo List!</h1>
+                <p>A Simple React Todo List App</p>
+                <ul className="lis">
+                    {this.state.todos.map((el) => <Todo text={el.todo} key={el.id} id={el.id} remove={this.handleRemove} edit={this.handleEdit} />)}
                 </ul>
+                <NewTodoForm handleForm={this.handleForm} />
             </div>
         )
     }

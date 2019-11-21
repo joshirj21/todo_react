@@ -4,7 +4,11 @@ import Todolist from "./Todolist"
 
 class App extends React.Component {
   render() {
-    return <Todolist />
+    return (
+      <div className="App">
+        <Todolist />
+      </div>
+    )
   }
 }
 
